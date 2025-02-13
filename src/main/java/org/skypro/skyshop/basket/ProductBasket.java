@@ -41,4 +41,23 @@ public class ProductBasket {
         productsStore[basketSlot] = product;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ProductBasket that = (ProductBasket) o;
+        return Objects.deepEquals(productsStore, that.productsStore);
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(productsStore);
+    }
+
+    @Override
+    public String toString() {
+        return "ProductBasket{" +
+                "productsStore=" + Arrays.toString(productsStore) +
+                '}';
+    }
 }
