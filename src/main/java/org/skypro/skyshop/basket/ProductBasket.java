@@ -23,5 +23,22 @@ public class ProductBasket {
         return null;
     }
 
+    public int basketAmountTotal() {
+        return Arrays.stream(productsStore)
+                .filter(Objects::nonNull)
+                .mapToInt(Product::getPrice)
+                .sum();
+    }
+
+    public void addProduct(Product product) throws BasketFullException {
+        if (product == null) throw new NullPointerException();
+
+        Integer basketSlot = findFreeBasketSlot();
+        if (basketSlot == null) {
+            throw new BasketFullException("Невозможно добавить продукт");
+        }
+
+        productsStore[basketSlot] = product;
+    }
 
 }
