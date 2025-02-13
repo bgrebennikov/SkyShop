@@ -41,10 +41,16 @@ public class ProductBasket {
         productsStore[basketSlot] = product;
     }
 
-    public boolean hasProductWithName(String name) {
+    public Product findByName(String productName){
         return Arrays.stream(productsStore)
                 .filter(Objects::nonNull)
-                .anyMatch(product -> product.getTitle().equals(name));
+                .filter(product -> product.getTitle().equals(productName))
+                .findFirst()
+                .orElse(null);
+    }
+
+    public boolean hasProductWithName(String name) {
+        return findByName(name) != null;
     }
 
     public void cleanBasket() {
