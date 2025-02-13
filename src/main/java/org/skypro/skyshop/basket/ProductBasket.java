@@ -41,6 +41,20 @@ public class ProductBasket {
         productsStore[basketSlot] = product;
     }
 
+    public void printProducts() {
+        if (productsStore.length == 0) {
+            System.out.println("Корзина пуста");
+            return;
+        }
+
+        StringBuilder consoleOutput = new StringBuilder();
+        for (Product product : productsStore) {
+            consoleOutput.append("%s: %sРуб".formatted(product.getTitle(), product.getPrice()));
+        }
+        consoleOutput.append("Итого: %s".formatted(basketAmountTotal()));
+        System.out.println(consoleOutput);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
