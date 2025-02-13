@@ -10,7 +10,7 @@ public class App {
 
         ProductBasket basket = new ProductBasket(5);
 
-        ArrayList<Product> products = new ArrayList<Product>();
+        ArrayList<Product> products = new ArrayList<>();
         products.add(new Product("Спирт", 500));
         products.add(new Product("Огурцы", 200));
         products.add(new Product("Тормазок", 129));
