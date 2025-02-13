@@ -33,7 +33,7 @@ public class ProductBasket {
         if (product == null) {
             System.out.println("Некорректное значение");
             return;
-        };
+        }
 
         Integer basketSlot = findFreeBasketSlot();
         if (basketSlot == null) {
@@ -61,18 +61,21 @@ public class ProductBasket {
     }
 
     public void printProducts() {
-        if (productsStore.length == 0) {
+        if (Arrays.stream(productsStore).noneMatch(Objects::nonNull)) {
             System.out.println("Корзина пуста");
             return;
         }
 
         StringBuilder consoleOutput = new StringBuilder();
         for (Product product : productsStore) {
-            consoleOutput.append("%s: %sРуб".formatted(product.getTitle(), product.getPrice()));
+            if (product != null) {
+                consoleOutput.append(String.format("%s: %s Руб\n", product.getTitle(), product.getPrice()));
+            }
         }
-        consoleOutput.append("Итого: %s".formatted(basketAmountTotal()));
+        consoleOutput.append("Итого: ").append(basketAmountTotal()).append(" Руб");
         System.out.println(consoleOutput);
     }
+
 
     @Override
     public boolean equals(Object o) {
