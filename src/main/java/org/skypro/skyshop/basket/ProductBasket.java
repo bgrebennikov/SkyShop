@@ -1,6 +1,5 @@
 package org.skypro.skyshop.basket;
 
-import org.skypro.skyshop.exceptions.BasketFullException;
 import org.skypro.skyshop.product.Product;
 
 import java.util.Arrays;
@@ -30,18 +29,22 @@ public class ProductBasket {
                 .sum();
     }
 
-    public void addProduct(Product product) throws BasketFullException {
-        if (product == null) throw new NullPointerException();
+    public void addProduct(Product product) {
+        if (product == null) {
+            System.out.println("Некорректное значение");
+            return;
+        };
 
         Integer basketSlot = findFreeBasketSlot();
         if (basketSlot == null) {
-            throw new BasketFullException("Невозможно добавить продукт");
+            System.out.println("Невозможно добавить продукт");
+            return;
         }
 
         productsStore[basketSlot] = product;
     }
 
-    public Product findByName(String productName){
+    public Product findByName(String productName) {
         return Arrays.stream(productsStore)
                 .filter(Objects::nonNull)
                 .filter(product -> product.getTitle().equals(productName))
