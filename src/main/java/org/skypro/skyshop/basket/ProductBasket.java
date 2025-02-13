@@ -41,6 +41,12 @@ public class ProductBasket {
         productsStore[basketSlot] = product;
     }
 
+    public boolean hasProductWithName(String name) {
+        return Arrays.stream(productsStore)
+                .filter(Objects::nonNull)
+                .anyMatch(product -> product.getTitle().equals(name));
+    }
+
     public void printProducts() {
         if (productsStore.length == 0) {
             System.out.println("Корзина пуста");
