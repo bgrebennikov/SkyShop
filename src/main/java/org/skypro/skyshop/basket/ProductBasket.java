@@ -47,6 +47,10 @@ public class ProductBasket {
                 .anyMatch(product -> product.getTitle().equals(name));
     }
 
+    public void cleanBasket() {
+        Arrays.fill(productsStore, null);
+    }
+
     public void printProducts() {
         if (productsStore.length == 0) {
             System.out.println("Корзина пуста");
