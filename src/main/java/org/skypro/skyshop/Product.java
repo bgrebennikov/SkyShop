@@ -2,8 +2,8 @@ package org.skypro.skyshop;
 
 public class Product {
 
-    private String title;
-    private Integer price;
+    private final String title;
+    private final Integer price;
 
     Product(String title, Integer price) {
         this.title = title;
@@ -15,15 +15,7 @@ public class Product {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public Integer getPrice() {
         return price;
-    }
-
-    public void setPrice(Integer price) {
-        this.price = price;
     }
 }
