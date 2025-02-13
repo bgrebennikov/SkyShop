@@ -17,7 +17,7 @@ public class ProductBasket {
 
     private Integer findFreeBasketSlot() {
         for (int i = 0; i < productsStore.length; i++) {
-            if (productsStore[i] != null) return i;
+            if (productsStore[i] == null) return i;
         }
         return null;
     }
