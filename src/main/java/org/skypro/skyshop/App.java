@@ -1,7 +1,10 @@
 package org.skypro.skyshop;
 
 import org.skypro.skyshop.basket.ProductBasket;
+import org.skypro.skyshop.product.DiscountedProduct;
+import org.skypro.skyshop.product.FixPriceProduct;
 import org.skypro.skyshop.product.Product;
+import org.skypro.skyshop.product.SimpleProduct;
 
 import java.util.ArrayList;
 
@@ -11,13 +14,13 @@ public class App {
         ProductBasket basket = new ProductBasket(5);
 
         ArrayList<Product> products = new ArrayList<>();
-        products.add(new Product("Спирт", 500));
-        products.add(new Product("Огурцы", 200));
-        products.add(new Product("Тормазок", 129));
-        products.add(new Product("Аренда медведя", 2500));
-        products.add(new Product("Балалайка", 6000));
+        products.add(new SimpleProduct("Спирт", 500));
+        products.add(new SimpleProduct("Огурцы", 200));
+        products.add(new SimpleProduct("Тормазок", 129));
+        products.add(new FixPriceProduct("Аренда медведя"));
+        products.add(new DiscountedProduct("Балалайка", 6000, 15));
 
-        products.add(new Product("Минеральная вода", 79));
+        products.add(new SimpleProduct("Минеральная вода", 79));
 
         System.out.println("Добавление продукта в корзину");
 
@@ -35,7 +38,7 @@ public class App {
         basket.addProduct(products.get(5));
 
         System.out.println("\nПоиск товара, который есть в корзине.");
-        Product moonshine = basket.findByName("Спирт");
+        SimpleProduct moonshine = (SimpleProduct) basket.findByName("Спирт");
 
         if (moonshine != null) {
             System.out.println(moonshine);
@@ -44,7 +47,7 @@ public class App {
         }
 
         System.out.println("\nПоиск товара, которого нет в корзине");
-        Product lostProduct = basket.findByName("Дизельный корабельный двигатель Wärtsilä-Sulzer RTA96-C");
+        SimpleProduct lostProduct = (SimpleProduct) basket.findByName("Дизельный корабельный двигатель Wärtsilä-Sulzer RTA96-C");
 
         if (lostProduct != null) {
             System.out.println(lostProduct.getTitle());
@@ -70,7 +73,7 @@ public class App {
 
         System.out.println("\nПоиск товара по имени в пустой корзине");
 
-        Product someProduct = basket.findByName(products.get(0).getTitle());
+        SimpleProduct someProduct = (SimpleProduct) basket.findByName(products.get(0).getTitle());
 
         if (someProduct != null) {
             System.out.println(someProduct.getTitle());

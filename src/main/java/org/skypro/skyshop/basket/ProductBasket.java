@@ -1,6 +1,9 @@
 package org.skypro.skyshop.basket;
 
+import org.skypro.skyshop.product.DiscountedProduct;
+import org.skypro.skyshop.product.FixPriceProduct;
 import org.skypro.skyshop.product.Product;
+import org.skypro.skyshop.product.SimpleProduct;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -27,6 +30,13 @@ public class ProductBasket {
                 .filter(Objects::nonNull)
                 .mapToInt(Product::getPrice)
                 .sum();
+    }
+
+    public int specialItemsCount() {
+        return (int) Arrays.stream(productsStore)
+                .filter(Objects::nonNull)
+                .filter(Product::isSpecial)
+                .count();
     }
 
     public void addProduct(Product product) {
@@ -68,11 +78,25 @@ public class ProductBasket {
 
         StringBuilder consoleOutput = new StringBuilder();
         for (Product product : productsStore) {
-            if (product != null) {
+            if (product == null) {
+                break;
+            }
+
+            if (product instanceof SimpleProduct) {
                 consoleOutput.append(String.format("%s: %s Руб\n", product.getTitle(), product.getPrice()));
+            } else if (product instanceof DiscountedProduct) {
+                consoleOutput.append(String.format("%s: %s Руб (Скидка %s%%)\n",
+                        product.getTitle(), product.getPrice(),
+                        ((DiscountedProduct) product).getDiscount()
+                ));
+            } else if (product instanceof FixPriceProduct) {
+                consoleOutput.append(String.format("%s: Фиксированная цена %s Руб\n",
+                        product.getTitle(), product.getPrice()
+                ));
             }
         }
-        consoleOutput.append("Итого: ").append(basketAmountTotal()).append(" Руб");
+        consoleOutput.append("\nИтого: ").append(basketAmountTotal()).append(" Руб \n");
+        consoleOutput.append("Специальных товаров: %s".formatted(specialItemsCount()));
         System.out.println(consoleOutput);
     }
 
