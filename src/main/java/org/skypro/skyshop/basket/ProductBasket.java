@@ -1,9 +1,6 @@
 package org.skypro.skyshop.basket;
 
-import org.skypro.skyshop.product.DiscountedProduct;
-import org.skypro.skyshop.product.FixPriceProduct;
 import org.skypro.skyshop.product.Product;
-import org.skypro.skyshop.product.SimpleProduct;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -78,21 +75,8 @@ public class ProductBasket {
 
         StringBuilder consoleOutput = new StringBuilder();
         for (Product product : productsStore) {
-            if (product == null) {
-                break;
-            }
-
-            if (product instanceof SimpleProduct) {
-                consoleOutput.append(String.format("%s: %s Руб\n", product.getTitle(), product.getPrice()));
-            } else if (product instanceof DiscountedProduct) {
-                consoleOutput.append(String.format("%s: %s Руб (Скидка %s%%)\n",
-                        product.getTitle(), product.getPrice(),
-                        ((DiscountedProduct) product).getDiscount()
-                ));
-            } else if (product instanceof FixPriceProduct) {
-                consoleOutput.append(String.format("%s: Фиксированная цена %s Руб\n",
-                        product.getTitle(), product.getPrice()
-                ));
+            if (product != null) {
+                consoleOutput.append(product).append("\n");
             }
         }
         consoleOutput.append("\nИтого: ").append(basketAmountTotal()).append(" Руб \n");
