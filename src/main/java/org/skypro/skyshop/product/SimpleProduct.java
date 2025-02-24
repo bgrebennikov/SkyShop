@@ -26,4 +26,8 @@ public class SimpleProduct extends Product {
         return title;
     }
 
+    @Override
+    public String toString() {
+        return "%s: %s Руб".formatted(title, price);
+    }
 }
