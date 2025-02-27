@@ -29,6 +29,13 @@ public class ProductBasket {
                 .sum();
     }
 
+    public int specialItemsCount() {
+        return (int) Arrays.stream(productsStore)
+                .filter(Objects::nonNull)
+                .filter(Product::isSpecial)
+                .count();
+    }
+
     public void addProduct(Product product) {
         if (product == null) {
             System.out.println("Некорректное значение");
@@ -69,10 +76,11 @@ public class ProductBasket {
         StringBuilder consoleOutput = new StringBuilder();
         for (Product product : productsStore) {
             if (product != null) {
-                consoleOutput.append(String.format("%s: %s Руб\n", product.getTitle(), product.getPrice()));
+                consoleOutput.append(product).append("\n");
             }
         }
-        consoleOutput.append("Итого: ").append(basketAmountTotal()).append(" Руб");
+        consoleOutput.append("\nИтого: ").append(basketAmountTotal()).append(" Руб \n");
+        consoleOutput.append("Специальных товаров: %s".formatted(specialItemsCount()));
         System.out.println(consoleOutput);
     }
 
