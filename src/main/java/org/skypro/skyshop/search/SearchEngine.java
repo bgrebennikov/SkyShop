@@ -1,4 +1,4 @@
-package org.skypro.skyshop;
+package org.skypro.skyshop.search;
 
 import java.util.Arrays;
 
@@ -7,7 +7,7 @@ public class SearchEngine {
     private final Searchable[] searchItems;
     private int size;
 
-    SearchEngine(int count) {
+    public SearchEngine(int count) {
         this.searchItems = new Searchable[count];
         this.size = 0;
     }
