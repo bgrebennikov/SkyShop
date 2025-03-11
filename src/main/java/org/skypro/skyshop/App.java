@@ -110,9 +110,8 @@ public class App {
                 Searchable::getStringRepresentation
         ).forEach(System.out::println);
 
-        Arrays.stream(emptyProductResult).map(
-                Searchable::getStringRepresentation
-        ).forEach(System.out::println);
+        System.out.println("\nПоиск несуществующей позиции\n");
+        System.out.println(Arrays.toString(emptyProductResult));
 
         System.out.println("\nДобавим более 5 позиций для поиска\n");
 
@@ -121,7 +120,6 @@ public class App {
         }
 
         Searchable[] searchBreadResult = searchEngine.search("Хлеб");
-
 
         Arrays.stream(searchBreadResult).map(
                 Searchable::getStringRepresentation
