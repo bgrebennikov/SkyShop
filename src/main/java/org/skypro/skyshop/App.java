@@ -1,12 +1,14 @@
 package org.skypro.skyshop;
 
 import org.skypro.skyshop.basket.ProductBasket;
+import org.skypro.skyshop.blog.Article;
 import org.skypro.skyshop.product.DiscountedProduct;
 import org.skypro.skyshop.product.FixPriceProduct;
 import org.skypro.skyshop.product.Product;
 import org.skypro.skyshop.product.SimpleProduct;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class App {
     public static void main(String[] args) {
@@ -80,6 +82,48 @@ public class App {
         } else {
             System.out.println("Товар не найден");
         }
+
+        // Part 3
+        System.out.println("\nPART 3\n");
+
+        SearchEngine searchEngine = new SearchEngine(5);
+
+        Article article = new Article(
+                "Lorem Ipsum",
+                "Lorem Ipsum is simply dummy text of the printing and typesetting industry"
+        );
+
+        searchEngine.add(moonshine);
+        searchEngine.add(article);
+
+        Searchable[] searchProductResult = searchEngine.search("Спирт");
+        Searchable[] searchArticleResult = searchEngine.search("Lorem Ipsum");
+        Searchable[] emptyProductResult = searchEngine.search("Blah blah blah");
+
+        Arrays.stream(searchProductResult).map(
+                Searchable::getStringRepresentation
+        ).forEach(System.out::println);
+
+        Arrays.stream(searchArticleResult).map(
+                Searchable::getStringRepresentation
+        ).forEach(System.out::println);
+
+        Arrays.stream(emptyProductResult).map(
+                Searchable::getStringRepresentation
+        ).forEach(System.out::println);
+
+        System.out.println("\nДобавим более 5 позиций для поиска\n");
+
+        for (int i = 0; i < 10; i++) {
+            searchEngine.add(new SimpleProduct("Хлеб", 50));
+        }
+
+        Searchable[] searchBreadResult = searchEngine.search("Хлеб");
+
+
+        Arrays.stream(searchBreadResult).map(
+                Searchable::getStringRepresentation
+        ).forEach(System.out::println);
 
 
     }
