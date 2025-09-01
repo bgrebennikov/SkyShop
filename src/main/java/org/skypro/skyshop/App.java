@@ -63,7 +63,7 @@ public class App {
         //  метод принимает в себя строку имени и возвращает boolean
         //  в зависимости от того, есть продукт в корзине или его нет.
 
-        System.out.printf("\nПродукт \"%s\": %s ", products.get(0).getTitle(), basket.hasProductWithName(products.get(0).getTitle()));
+        System.out.printf("\nПродукт \"%s\": %s ", products.getFirst().getTitle(), basket.hasProductWithName(products.getFirst().getTitle()));
         System.out.printf("\nПродукт \"Чай\": %s ", basket.hasProductWithName("Чай"));
 
         System.out.println("\nОчистка корзины");
@@ -77,7 +77,7 @@ public class App {
 
         System.out.println("\nПоиск товара по имени в пустой корзине");
 
-        SimpleProduct someProduct = (SimpleProduct) basket.findByName(products.get(0).getTitle());
+        SimpleProduct someProduct = (SimpleProduct) basket.findByName(products.getFirst().getTitle());
 
         if (someProduct != null) {
             System.out.println(someProduct.getTitle());
