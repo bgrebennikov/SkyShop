@@ -1,6 +1,9 @@
 package org.skypro.skyshop.search;
 
+import org.skypro.skyshop.exception.BestResultNotFound;
+
 import java.util.Arrays;
+import java.util.Objects;
 
 public class SearchEngine {
 
@@ -29,4 +32,44 @@ public class SearchEngine {
                 .limit(5)
                 .toArray(Searchable[]::new);
     }
+
+    public Searchable findBestMatch(String search) throws BestResultNotFound {
+        if (search == null || search.trim().isEmpty()) {
+            throw new IllegalArgumentException("Поисковый запрос не может быть пустым.");
+        }
+
+        String normalizedSearch = search.trim().toLowerCase();
+
+        return Arrays.stream(searchItems, 0, size)
+                .filter(Objects::nonNull)
+                .max((a, b) -> {
+                    int countA = countOccurrences(a.getSearchTerm().toLowerCase(), normalizedSearch);
+                    int countB = countOccurrences(b.getSearchTerm().toLowerCase(), normalizedSearch);
+                    return Integer.compare(countA, countB);
+                })
+                .filter(item -> countOccurrences(item.getSearchTerm().toLowerCase(), normalizedSearch) > 0)
+                .orElseThrow(() -> new BestResultNotFound(search));
+    }
+
+
+    private int countOccurrences(String text, String substring) {
+        if (text == null || substring == null || substring.isEmpty()) {
+            return 0;
+        }
+
+        int count = 0;
+        int index = 0;
+
+        while (true) {
+            int foundIndex = text.indexOf(substring, index);
+            if (foundIndex == -1) {
+                break;
+            }
+            count++;
+            index = foundIndex + substring.length();
+        }
+
+        return count;
+    }
+
 }
