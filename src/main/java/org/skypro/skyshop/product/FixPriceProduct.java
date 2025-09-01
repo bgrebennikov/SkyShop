@@ -1,6 +1,8 @@
 package org.skypro.skyshop.product;
 
-public class FixPriceProduct extends Product {
+import org.skypro.skyshop.search.Searchable;
+
+public class FixPriceProduct extends Product implements Searchable {
 
     private static final Integer FIXED_PRICE = 350;
 
@@ -21,5 +23,15 @@ public class FixPriceProduct extends Product {
     @Override
     public String toString() {
         return "%s: Фиксированная цена %s Руб".formatted(getTitle(), getPrice());
+    }
+
+    @Override
+    public String getSearchTerm() {
+        return getTitle();
+    }
+
+    @Override
+    public String getContentType() {
+        return "PRODUCT";
     }
 }

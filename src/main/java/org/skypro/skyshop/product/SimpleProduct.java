@@ -1,6 +1,9 @@
 package org.skypro.skyshop.product;
 
-public class SimpleProduct extends Product {
+import org.skypro.skyshop.exception.InvalidProductTitleException;
+import org.skypro.skyshop.search.Searchable;
+
+public class SimpleProduct extends Product implements Searchable {
 
     private final String title;
     private final Integer price;
@@ -8,6 +11,10 @@ public class SimpleProduct extends Product {
     public SimpleProduct(final String title, final Integer price) {
         super(title);
         this.title = title;
+
+        if (price == null ||  price <= 0) {
+            throw new InvalidProductTitleException("Цена продукта должна быть выше нуля.");
+        }
         this.price = price;
     }
 
@@ -29,5 +36,15 @@ public class SimpleProduct extends Product {
     @Override
     public String toString() {
         return "%s: %s Руб".formatted(title, price);
+    }
+
+    @Override
+    public String getSearchTerm() {
+        return this.title;
+    }
+
+    @Override
+    public String getContentType() {
+        return "PRODUCT";
     }
 }
