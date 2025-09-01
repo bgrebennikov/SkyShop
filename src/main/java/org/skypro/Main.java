@@ -15,19 +15,19 @@ public class Main {
     public static void main(String[] args) {
 
         try {
-            SimpleProduct emptyTitle = new SimpleProduct("    ", 100);
+            new SimpleProduct("    ", 100);
         } catch (InvalidProductTitleException e) {
             System.out.println(e.getMessage());
         }
 
         try {
-            SimpleProduct bread = new SimpleProduct("Хлеб", 0);
+            new SimpleProduct("Хлеб", 0);
         } catch (InvalidProductTitleException e) {
             System.out.println(e.getMessage());
         }
 
         try {
-            DiscountedProduct discounted = new DiscountedProduct("Торт", 500, 1000);
+            new DiscountedProduct("Торт", 500, 1000);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
