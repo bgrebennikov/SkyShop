@@ -1,5 +1,7 @@
 package org.skypro.skyshop.product;
 
+import org.skypro.skyshop.exception.InvalidDiscountException;
+import org.skypro.skyshop.exception.InvalidProductPriceException;
 import org.skypro.skyshop.search.Searchable;
 
 public class DiscountedProduct extends Product implements Searchable {
@@ -9,7 +11,15 @@ public class DiscountedProduct extends Product implements Searchable {
 
     public DiscountedProduct(String title, Integer basePrice, Integer discount) {
         super(title);
+
+        if (basePrice == null || basePrice <= 0) {
+            throw new InvalidProductPriceException("Базовая цена должна быть выше нуля.");
+        }
         this.basePrice = basePrice;
+
+        if (discount < 0 ||  discount > 100) {
+            throw new InvalidDiscountException("Значение скидки должно быть в диапозоне от 0 до 100 включительно");
+        }
         this.discount = discount;
     }
 
