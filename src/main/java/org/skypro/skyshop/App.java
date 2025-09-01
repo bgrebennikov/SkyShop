@@ -1,12 +1,16 @@
 package org.skypro.skyshop;
 
 import org.skypro.skyshop.basket.ProductBasket;
+import org.skypro.skyshop.blog.Article;
 import org.skypro.skyshop.product.DiscountedProduct;
 import org.skypro.skyshop.product.FixPriceProduct;
 import org.skypro.skyshop.product.Product;
 import org.skypro.skyshop.product.SimpleProduct;
+import org.skypro.skyshop.search.SearchEngine;
+import org.skypro.skyshop.search.Searchable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class App {
     public static void main(String[] args) {
@@ -59,7 +63,7 @@ public class App {
         //  метод принимает в себя строку имени и возвращает boolean
         //  в зависимости от того, есть продукт в корзине или его нет.
 
-        System.out.printf("\nПродукт \"%s\": %s ", products.get(0).getTitle(), basket.hasProductWithName(products.get(0).getTitle()));
+        System.out.printf("\nПродукт \"%s\": %s ", products.getFirst().getTitle(), basket.hasProductWithName(products.getFirst().getTitle()));
         System.out.printf("\nПродукт \"Чай\": %s ", basket.hasProductWithName("Чай"));
 
         System.out.println("\nОчистка корзины");
@@ -73,13 +77,53 @@ public class App {
 
         System.out.println("\nПоиск товара по имени в пустой корзине");
 
-        SimpleProduct someProduct = (SimpleProduct) basket.findByName(products.get(0).getTitle());
+        SimpleProduct someProduct = (SimpleProduct) basket.findByName(products.getFirst().getTitle());
 
         if (someProduct != null) {
             System.out.println(someProduct.getTitle());
         } else {
             System.out.println("Товар не найден");
         }
+
+        // Part 3
+        System.out.println("\nPART 3\n");
+
+        SearchEngine searchEngine = new SearchEngine(5);
+
+        Article article = new Article(
+                "Lorem Ipsum",
+                "Lorem Ipsum is simply dummy text of the printing and typesetting industry"
+        );
+
+        searchEngine.add(moonshine);
+        searchEngine.add(article);
+
+        Searchable[] searchProductResult = searchEngine.search("Спирт");
+        Searchable[] searchArticleResult = searchEngine.search("Lorem Ipsum");
+        Searchable[] emptyProductResult = searchEngine.search("Blah blah blah");
+
+        Arrays.stream(searchProductResult).map(
+                Searchable::getStringRepresentation
+        ).forEach(System.out::println);
+
+        Arrays.stream(searchArticleResult).map(
+                Searchable::getStringRepresentation
+        ).forEach(System.out::println);
+
+        System.out.println("\nПоиск несуществующей позиции\n");
+        System.out.println(Arrays.toString(emptyProductResult));
+
+        System.out.println("\nДобавим более 5 позиций для поиска\n");
+
+        for (int i = 0; i < 10; i++) {
+            searchEngine.add(new SimpleProduct("Хлеб", 50));
+        }
+
+        Searchable[] searchBreadResult = searchEngine.search("Хлеб");
+
+        Arrays.stream(searchBreadResult).map(
+                Searchable::getStringRepresentation
+        ).forEach(System.out::println);
 
 
     }
