@@ -10,6 +10,7 @@ public class SimpleProduct extends Product implements Searchable {
     public SimpleProduct(final String title, final Integer price) {
         super(title);
         this.title = title;
+
         this.price = price;
     }
 
