@@ -49,7 +49,13 @@ public class ProductBasket {
         return findByName(name) != null;
     }
 
+    public List<Product> deleteByName(String productName) {
+        List<Product> itemsToRemove = productsStore.stream()
+                .filter(p -> p.getTitle().equals(productName))
+                .toList();
 
+        productsStore.removeAll(itemsToRemove);
+    }
 
     public void cleanBasket() {
         productsStore.clear();
