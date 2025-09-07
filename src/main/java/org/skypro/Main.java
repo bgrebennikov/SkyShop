@@ -11,7 +11,6 @@ import org.skypro.skyshop.search.Searchable;
 public class Main {
 
 
-
     public static void main(String[] args) {
 
         try {
@@ -43,7 +42,6 @@ public class Main {
         FixPriceProduct fp4 = new FixPriceProduct("Горох");
 
 
-
         SearchEngine searchEngine = new SearchEngine();
 
         searchEngine.add(p1);
@@ -58,7 +56,7 @@ public class Main {
 
         System.out.println("\n\nрезультат когда нужный объект существует\n");
 
-        try{
+        try {
             Searchable sr1 = searchEngine.findBestMatch("апел");
             System.out.println(sr1.toString());
 
@@ -66,18 +64,18 @@ public class Main {
             System.out.println(sr2.toString());
 
 
-        } catch (BestResultNotFound e){
+        } catch (BestResultNotFound e) {
             System.out.println(e.getMessage());
         }
 
         System.out.println("\n\nкогда метод выбрасывает исключение\n");
 
-        try{
+        try {
             Searchable fsr = searchEngine.findBestMatch("абвгд123");
             System.out.println(fsr.toString());
 
 
-        } catch (BestResultNotFound e){
+        } catch (BestResultNotFound e) {
             System.out.println(e.getMessage());
         }
 
