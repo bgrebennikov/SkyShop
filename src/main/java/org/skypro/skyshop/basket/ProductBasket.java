@@ -55,6 +55,7 @@ public class ProductBasket {
                 .toList();
 
         productsStore.removeAll(itemsToRemove);
+        return itemsToRemove;
     }
 
     public void cleanBasket() {

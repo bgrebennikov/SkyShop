@@ -15,7 +15,7 @@ import java.util.Arrays;
 public class App {
     public static void main(String[] args) {
 
-        ProductBasket basket = new ProductBasket(5);
+        ProductBasket basket = new ProductBasket();
 
         ArrayList<Product> products = new ArrayList<>();
         products.add(new SimpleProduct("Спирт", 500));
@@ -58,10 +58,6 @@ public class App {
         } else {
             System.out.println("Товар не найден");
         }
-
-        //  Метод, проверяющий продукт в корзине по имени:
-        //  метод принимает в себя строку имени и возвращает boolean
-        //  в зависимости от того, есть продукт в корзине или его нет.
 
         System.out.printf("\nПродукт \"%s\": %s ", products.getFirst().getTitle(), basket.hasProductWithName(products.getFirst().getTitle()));
         System.out.printf("\nПродукт \"Чай\": %s ", basket.hasProductWithName("Чай"));
