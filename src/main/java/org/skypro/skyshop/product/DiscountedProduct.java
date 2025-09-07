@@ -1,13 +1,25 @@
 package org.skypro.skyshop.product;
 
-public class DiscountedProduct extends Product {
+import org.skypro.skyshop.exception.InvalidDiscountException;
+import org.skypro.skyshop.exception.InvalidProductPriceException;
+import org.skypro.skyshop.search.Searchable;
+
+public class DiscountedProduct extends Product implements Searchable {
 
     private final Integer discount;
     private final Integer basePrice;
 
     public DiscountedProduct(String title, Integer basePrice, Integer discount) {
         super(title);
+
+        if (basePrice == null || basePrice <= 0) {
+            throw new InvalidProductPriceException("Базовая цена должна быть выше нуля.");
+        }
         this.basePrice = basePrice;
+
+        if (discount < 0 ||  discount > 100) {
+            throw new InvalidDiscountException("Значение скидки должно быть в диапозоне от 0 до 100 включительно");
+        }
         this.discount = discount;
     }
 
@@ -28,5 +40,15 @@ public class DiscountedProduct extends Product {
     @Override
     public String toString() {
         return "%s: %s Руб (Скидка %s%%)".formatted(getTitle(), getPrice(), getDiscount());
+    }
+
+    @Override
+    public String getSearchTerm() {
+        return getTitle();
+    }
+
+    @Override
+    public String getContentType() {
+        return "PRODUCT";
     }
 }

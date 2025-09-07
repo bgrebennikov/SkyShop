@@ -2,35 +2,28 @@ package org.skypro.skyshop.basket;
 
 import org.skypro.skyshop.product.Product;
 
-import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Objects;
 
 public class ProductBasket {
 
-    private final Product[] productsStore;
+    private final List<Product> productsStore;
 
 
-    public ProductBasket(Integer capacity) {
-        if (capacity == null) capacity = 5;
-        productsStore = new Product[capacity];
-    }
-
-    private Integer findFreeBasketSlot() {
-        for (int i = 0; i < productsStore.length; i++) {
-            if (productsStore[i] == null) return i;
-        }
-        return null;
+    public ProductBasket() {
+        this.productsStore = new LinkedList<Product>();
     }
 
     public int basketAmountTotal() {
-        return Arrays.stream(productsStore)
+        return productsStore.stream()
                 .filter(Objects::nonNull)
                 .mapToInt(Product::getPrice)
                 .sum();
     }
 
     public int specialItemsCount() {
-        return (int) Arrays.stream(productsStore)
+        return (int) productsStore.stream()
                 .filter(Objects::nonNull)
                 .filter(Product::isSpecial)
                 .count();
@@ -41,18 +34,11 @@ public class ProductBasket {
             System.out.println("Некорректное значение");
             return;
         }
-
-        Integer basketSlot = findFreeBasketSlot();
-        if (basketSlot == null) {
-            System.out.println("Невозможно добавить продукт");
-            return;
-        }
-
-        productsStore[basketSlot] = product;
+        productsStore.add(product);
     }
 
     public Product findByName(String productName) {
-        return Arrays.stream(productsStore)
+        return productsStore.stream()
                 .filter(Objects::nonNull)
                 .filter(product -> product.getTitle().equals(productName))
                 .findFirst()
@@ -63,12 +49,21 @@ public class ProductBasket {
         return findByName(name) != null;
     }
 
+    public List<Product> deleteByName(String productName) {
+        List<Product> itemsToRemove = productsStore.stream()
+                .filter(p -> p.getTitle().equals(productName))
+                .toList();
+
+        productsStore.removeAll(itemsToRemove);
+        return itemsToRemove;
+    }
+
     public void cleanBasket() {
-        Arrays.fill(productsStore, null);
+        productsStore.clear();
     }
 
     public void printProducts() {
-        if (Arrays.stream(productsStore).noneMatch(Objects::nonNull)) {
+        if (productsStore.stream().noneMatch(Objects::nonNull)) {
             System.out.println("Корзина пуста");
             return;
         }
@@ -95,13 +90,13 @@ public class ProductBasket {
 
     @Override
     public int hashCode() {
-        return Arrays.hashCode(productsStore);
+        return productsStore.hashCode();
     }
 
     @Override
     public String toString() {
         return "ProductBasket{" +
-                "productsStore=" + Arrays.toString(productsStore) +
+                "productsStore=" + productsStore.toString() +
                 '}';
     }
 }
