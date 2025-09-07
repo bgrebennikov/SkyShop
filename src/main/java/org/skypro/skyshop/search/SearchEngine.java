@@ -2,35 +2,27 @@ package org.skypro.skyshop.search;
 
 import org.skypro.skyshop.exception.BestResultNotFound;
 
-import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class SearchEngine {
 
-    private final Searchable[] searchItems;
-    private int size;
+    private final List<Searchable> searchItems;
 
-    public SearchEngine(int count) {
-        this.searchItems = new Searchable[count];
-        this.size = 0;
+    public SearchEngine() {
+        this.searchItems = new LinkedList<Searchable>();
     }
 
     public void add(Searchable searchItem) {
-        if (size == searchItems.length) {
-            System.arraycopy(searchItems, 0, searchItems, 1, searchItems.length - 1);
-            searchItems[0] = searchItem;
-        } else {
-            System.arraycopy(searchItems, 0, searchItems, 1, size);
-            searchItems[0] = searchItem;
-            size++;
-        }
+        searchItems.add(searchItem);
     }
 
-    public Searchable[] search(String query) {
-        return Arrays.stream(searchItems)
+    public List<Searchable> search(String query) {
+        return searchItems.stream()
                 .filter(t -> t != null && t.getSearchTerm().contains(query))
-                .limit(5)
-                .toArray(Searchable[]::new);
+                .collect(Collectors.toList());
     }
 
     public Searchable findBestMatch(String search) throws BestResultNotFound {
@@ -40,7 +32,7 @@ public class SearchEngine {
 
         String normalizedSearch = search.trim().toLowerCase();
 
-        return Arrays.stream(searchItems, 0, size)
+        return searchItems.stream()
                 .filter(Objects::nonNull)
                 .max((a, b) -> {
                     int countA = countOccurrences(a.getSearchTerm().toLowerCase(), normalizedSearch);

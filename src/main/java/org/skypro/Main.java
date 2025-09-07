@@ -44,7 +44,7 @@ public class Main {
 
 
 
-        SearchEngine searchEngine = new SearchEngine(8);
+        SearchEngine searchEngine = new SearchEngine();
 
         searchEngine.add(p1);
         searchEngine.add(p2);

@@ -18,12 +18,15 @@ public class App {
 
         ProductBasket basket = new ProductBasket();
 
-        basket.addProduct(new SimpleProduct("Хлеб", 100));
-        basket.addProduct(new SimpleProduct("Вода", 100));
-        basket.addProduct(new SimpleProduct("Вода", 50));
-        basket.addProduct(new SimpleProduct("Молоко", 100));
-        basket.addProduct(new SimpleProduct("Масло", 100));
+        SimpleProduct bread = new SimpleProduct("Хлеб", 50);
+        SimpleProduct water = new SimpleProduct("Вода", 65);
+        SimpleProduct milk = new SimpleProduct("Молоко", 100);
+        SimpleProduct butter = new SimpleProduct("Масло", 150);
 
+        basket.addProduct(bread);
+        basket.addProduct(water);
+        basket.addProduct(milk);
+        basket.addProduct(butter);
 
         List<Product> deletedItems = basket.deleteByName("Вода");
         System.out.println("Удалено: " + deletedItems);
@@ -37,7 +40,7 @@ public class App {
             System.out.println(nonExistingProduct);
         }
 
-        SearchEngine searchEngine = new SearchEngine(5);
+        SearchEngine searchEngine = new SearchEngine();
 
         Article article = new Article(
                 "Lorem Ipsum",
@@ -45,6 +48,17 @@ public class App {
         );
 
         searchEngine.add(article);
+        searchEngine.add(bread);
+        searchEngine.add(water);
+        searchEngine.add(milk);
+        searchEngine.add(butter);
+
+        List<Searchable> milkQuery = searchEngine.search("Молоко");
+        System.out.println("Результат поиска по запросу \"Молоко\":  " + milkQuery);
+
+        List<Searchable> randomQuery = searchEngine.search("abcdef123");
+        System.out.println("Результат поиска по запросу \"abcdef123\":  " + randomQuery);
+
 
 
 
