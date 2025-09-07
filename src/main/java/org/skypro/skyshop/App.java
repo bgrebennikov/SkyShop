@@ -2,15 +2,11 @@ package org.skypro.skyshop;
 
 import org.skypro.skyshop.basket.ProductBasket;
 import org.skypro.skyshop.blog.Article;
-import org.skypro.skyshop.product.DiscountedProduct;
-import org.skypro.skyshop.product.FixPriceProduct;
 import org.skypro.skyshop.product.Product;
 import org.skypro.skyshop.product.SimpleProduct;
 import org.skypro.skyshop.search.SearchEngine;
 import org.skypro.skyshop.search.Searchable;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class App {
@@ -58,8 +54,6 @@ public class App {
 
         List<Searchable> randomQuery = searchEngine.search("abcdef123");
         System.out.println("Результат поиска по запросу \"abcdef123\":  " + randomQuery);
-
-
 
 
     }
